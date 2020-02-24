@@ -5,11 +5,11 @@ const fs = require('fs');
 app.post('/', (req, res) => {
 
     let body = req.body;
-    console.log(body);
+    // console.log(body);
 
     let listadoSKUs = new Array();
-
     if( body.lista ) {
+        console.log( 'Lista:', body.lista );
         listadoSKUs = body.lista.split(',');
         listadoSKUs = listadoSKUs.map( x => x.trim() );
     }
@@ -20,7 +20,7 @@ app.post('/', (req, res) => {
             if (err) {
                 console.log('error: ', err);
             } else {
-                console.log('bien ok');
+                console.log('bien ok!!');
             }
         });
     // }
