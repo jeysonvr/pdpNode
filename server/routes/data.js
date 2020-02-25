@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const fs = require('fs');
+var csv = require('csv-express');
 
 app.post('/', (req, res) => {
 
@@ -8,21 +9,21 @@ app.post('/', (req, res) => {
     // console.log(body);
 
     let listadoSKUs = new Array();
-    if( body.lista ) {
-        console.log( 'Lista:', body.lista );
+    if (body.lista) {
+        console.log('Lista:', body.lista);
         listadoSKUs = body.lista.split(',');
-        listadoSKUs = listadoSKUs.map( x => x.trim() );
+        listadoSKUs = listadoSKUs.map(x => x.trim());
     }
 
     // Process
     // function saveDoc() {
-        fs.appendFile('prueba/prueba_1.csv', '\ufeff' + 'abcdario', { encoding: 'utf16le' }, function (err) {
-            if (err) {
-                console.log('error: ', err);
-            } else {
-                console.log('bien ok!!');
-            }
-        });
+    fs.appendFile('prueba/prueba_1.csv', '\ufeff' + 'abcdario', { encoding: 'utf16le' }, function (err) {
+        if (err) {
+            console.log('error: ', err);
+        } else {
+            console.log('bien ok!!');
+        }
+    });
     // }
 
 
@@ -32,7 +33,17 @@ app.post('/', (req, res) => {
     //     lista: listadoSKUs
     // }).download('/prueba.csv');
 
-    res.status(200).download('/prueba.csv');
+    // res.status(200).download('/prueba.csv');
+
+    // res.setHeader('Content-disposition', 'attachment; filename=data.csv');
+    // res.set('Content-Type', 'text/csv');
+    // res.status(200).send(csv);
+    res.csv([
+        { "a": 1, "b": 2, "c": 3 },
+        { "a": 4, "b": 5, "c": 6 }
+    ], true, {
+        "Access-Control-Allow-Origin": "*"
+    }, 500)
 
 });
 
