@@ -26,11 +26,7 @@ app.post('/', (req, res) => {
     // }
 
 
-    res.status(200).json({
-        ok: true,
-        mensaje: "Todo está bien post 1",
-        lista: listadoSKUs
-    }).download('/prueba.csv');
+    res.status(200).download('/prueba.csv');
 
 });
 
