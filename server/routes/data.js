@@ -43,7 +43,7 @@ app.post('/', (req, res) => {
         { "a": 4, "b": 5, "c": 6 }
     ], true, {
         "Access-Control-Allow-Origin": "*"
-    }, 500)
+    }, 200);
 
 });
 
