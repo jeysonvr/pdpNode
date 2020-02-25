@@ -32,7 +32,7 @@ app.post('/', (req, res) => {
 
     res.setHeader('Content-disposition', 'attachment; filename=data.csv');
     res.set('Content-Type', 'text/csv');
-    res.status(200).send(csv);
+    // res.status(200).send(csv);
     res.csv([
         { "a": 1, "b": 2, "c": 3 },
         { "a": 4, "b": 5, "c": 6 }
