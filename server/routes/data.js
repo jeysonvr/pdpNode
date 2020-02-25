@@ -26,19 +26,21 @@ app.post('/', (req, res) => {
     // }
 
 
-    res.status(200).download('/prueba.csv');
+    // res.status(200).download('/prueba.csv');
 
     // res.status(200).download('/prueba.csv');
 
-    // res.setHeader('Content-disposition', 'attachment; filename=data.csv');
-    // res.set('Content-Type', 'text/csv');
-    // res.status(200).send(csv);
-    // res.csv([
-    //     { "a": 1, "b": 2, "c": 3 },
-    //     { "a": 4, "b": 5, "c": 6 }
-    // ], true, {
-    //     "Access-Control-Allow-Origin": "*"
-    // }, 200);
+    res.setHeader('Content-disposition', 'attachment; filename=data.csv');
+    res.set('Content-Type', 'text/csv');
+    res.status(200).send(csv);
+    res.csv([
+        { "a": 1, "b": 2, "c": 3 },
+        { "a": 4, "b": 5, "c": 6 }
+    ], true, {
+        "Access-Control-Allow-Origin": "*"
+    }, 200);
+
+    res.send();
 
 });
 
