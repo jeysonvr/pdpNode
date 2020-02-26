@@ -47,7 +47,7 @@ const getPage = async (sku) => {
             // errorList.push(sku);
         })
 
-    return { "Sku": 1, "Ficha": 2 };
+    return { "Sku": sku, "Ficha": lista };
     // return resultado;
 }
 
