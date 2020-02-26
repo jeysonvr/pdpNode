@@ -11,9 +11,11 @@ app.use(cors());
 
 app.use(require('./routes/data'));
 
-app.listen(process.env.PORT, () => {
+var server = app.listen(process.env.PORT, () => {
     console.log('Escuchando puerto:', process.env.PORT);
 });
+
+server.timeout = 1000 * 60 * 10;
 
 
 console.log('dir name:', __dirname);

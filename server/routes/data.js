@@ -40,15 +40,12 @@ const getPage = async (sku) => {
                 lista += '"Producto no publicado en página"\n';
             }
             console.log('Proceso: ', sku, lista);
-            data.push( { "Sku": sku, "Ficha": lista } );
+            data.push({ "Sku": sku, "Ficha": lista });
 
         })
         .catch(err => {
             console.log("Error", err);
-            // errorList.push(sku);
         })
-
-    // return resultado;
 }
 
 app.post('/', (req, res) => {
@@ -78,7 +75,7 @@ app.post('/', (req, res) => {
                     res.csv(data, true, {
                         "Access-Control-Allow-Origin": "*"
                     }, 200);
-                    
+
                     res.send();
                     console.log('done');
                 }, 20000);
@@ -87,16 +84,6 @@ app.post('/', (req, res) => {
 
     }
 
-    // res.setHeader('Content-disposition', 'attachment; filename=data.csv');
-    // res.set('Content-Type', 'text/csv');
-    // res.csv([
-    //     { "a": 1, "b": 2, "c": 3 },
-    //     { "a": 4, "b": 5, "c": 600 }
-    // ], true, {
-    //     "Access-Control-Allow-Origin": "*"
-    // }, 200);
-    // res.send();
-    
 });
 
 
