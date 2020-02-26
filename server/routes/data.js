@@ -55,14 +55,14 @@ app.post('/', (req, res) => {
 
     let body = req.body;
     // console.log(body);
-    let data = new Array();
+    // let data = new Array();
 
-    let listadoSKUs = new Array();
-    if (body.lista) {
-        console.log('Lista:', body.lista);
-        listadoSKUs = body.lista.split(',');
-        listadoSKUs = listadoSKUs.map(x => x.trim());
-    }
+    // let listadoSKUs = new Array();
+    // if (body.lista) {
+    //     console.log('Lista:', body.lista);
+    //     listadoSKUs = body.lista.split(',');
+    //     listadoSKUs = listadoSKUs.map(x => x.trim());
+    // }
 
     // Process
     // if (listadoSKUs.length > 0) {
@@ -86,14 +86,15 @@ app.post('/', (req, res) => {
 
     // }
 
-    res.setHeader('Content-disposition', 'attachment; filename=data.csv');
-    res.set('Content-Type', 'text/csv');
+    // res.setHeader('Content-disposition', 'attachment; filename=data.csv');
+    // res.set('Content-Type', 'text/csv');
     res.csv([
         { "a": 1, "b": 2, "c": 3 },
         { "a": 4, "b": 5, "c": 6 }
     ], true, {
         "Access-Control-Allow-Origin": "*"
     }, 200);
+    res.send();
     
 });
 
