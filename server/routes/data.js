@@ -33,6 +33,7 @@ const getPage = async (sku) => {
             }
             console.log('Proceso: ', sku, lista);
             data.push( { "Sku": sku, "Ficha": lista } );
+            return true;
 
         }
     });
