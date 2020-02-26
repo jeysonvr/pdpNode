@@ -8,7 +8,7 @@ const iconv = require('iconv-lite');
 
 
 const getPage = async (sku) => {
-    request({ uri: `https://www.homecenter.com.co/homecenter-co/product/${sku}`, encoding: null }, function (err, res, body) {
+    await request({ uri: `https://www.homecenter.com.co/homecenter-co/product/${sku}`, encoding: null }, function (err, res, body) {
         if (!err && res.statusCode == 200) {
             body = iconv.decode(body, 'ISO-8859-1');
             let $ = cheerio.load(body, { decodeEntities: false });
