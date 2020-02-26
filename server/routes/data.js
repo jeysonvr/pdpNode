@@ -56,7 +56,7 @@ app.post('/', async (req, res) => {
         let intervalos = setInterval(() => {
             getPage(listadoSKUs.shift());
 
-            if (!listadoSKUs) {
+            if (listadoSKUs.length == 0) {
                 clearInterval(intervalos);
                 setTimeout(function () {
                     res.setHeader('Content-disposition', 'attachment; filename=data.csv');
