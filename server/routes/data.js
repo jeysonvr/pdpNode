@@ -17,7 +17,7 @@ const getPage = async (sku) => {
         baseURL: url
     });
 
-    aainstance.get()
+    instance.get()
         .then(async (resp) => {
             let $ = cheerio.load(resp.data, { decodeEntities: false });
 
