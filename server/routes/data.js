@@ -81,9 +81,9 @@ app.post('/', (req, res) => {
                     
                     res.send();
                     console.log('done');
-                }, 5000);
+                }, 200);
             }
-        }, 1000);
+        }, 20000);
 
     }
 
