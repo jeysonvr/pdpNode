@@ -40,6 +40,7 @@ const getPage = async (sku) => {
                 lista += '"Producto no publicado en página"\n';
             }
             console.log('Proceso: ', sku, lista);
+            return { "Sku": sku, "Ficha": lista };
 
         })
         .catch(err => {
@@ -47,7 +48,6 @@ const getPage = async (sku) => {
             // errorList.push(sku);
         })
 
-    return { "Sku": sku, "Ficha": lista };
     // return resultado;
 }
 
