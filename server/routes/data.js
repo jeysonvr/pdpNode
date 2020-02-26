@@ -38,7 +38,7 @@ const getPage = (sku) => {
     });
 }
 
-app.post('/', (req, res) => {
+app.post('/', async (req, res) => {
 
     let body = req.body;
     // console.log(body);
