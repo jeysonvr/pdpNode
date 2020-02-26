@@ -32,7 +32,7 @@ const getPage = async (sku) => {
                 lista += '"Producto no publicado en página"\n';
             }
             console.log('Proceso: ', sku, lista);
-            data.push( { "Sku": sku, "Ficha": lista } );
+            data.push( { '"Sku"': 1, '"Ficha"': 2 } );
             return true;
 
         }
@@ -59,14 +59,15 @@ app.post('/', async (req, res) => {
             await getPage(listadoSKUs.shift());
             console.log('ficha: ......................................................', data);
             if (listadoSKUs.length == 0) {
+                console.log(data);
                 clearInterval(intervalos);
                 setTimeout(function () {
                     res.setHeader('Content-disposition', 'attachment; filename=data.csv');
                     res.set('Content-Type', 'text/csv');
-                    console.log(data);
                     res.csv(data, true, {
                         "Access-Control-Allow-Origin": "*"
                     }, 200);
+                    console.log('done');
 
                     res.send();
                 }, 5000);
