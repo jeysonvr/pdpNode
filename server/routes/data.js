@@ -78,8 +78,7 @@ app.post('/', (req, res) => {
                 setTimeout(function () {
 
                     res.csv([
-                        { "a": 1, "b": 2, "c": 3 },
-                        { "a": 4, "b": 5, "c": 700 }
+                        { "Sku": 1, "Ficha": 2,}
                     ], true, {
                         "Access-Control-Allow-Origin": "*"
                     }, 200);
