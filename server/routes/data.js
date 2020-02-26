@@ -50,8 +50,7 @@ app.post('/', (req, res) => {
     // Process
     if (listadoSKUs.length > 0) {
 
-        var intervalos = setInterval(() => {
-            var url = 'https://www.homecenter.com.co/homecenter-co/product/' + skus[i];
+        let intervalos = setInterval(() => {
             getPage(listadoSKUs.shift());
 
             if (!listadoSKUs) {
