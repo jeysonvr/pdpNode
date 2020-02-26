@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
 // const fs = require('fs');
+const cheerio = require('cheerio');
+const request = require('request');
+const iconv = require('iconv-lite');
 
 let data = new Array();
 
