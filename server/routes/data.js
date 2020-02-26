@@ -77,7 +77,7 @@ app.post('/', async (req, res) => {
                 setTimeout(function () {
                     res.setHeader('Content-disposition', 'attachment; filename=data.csv');
                     res.set('Content-Type', 'text/csv');
-                    res.csv({ "Sku": 10, "Ficha": 20 }, true, {
+                    res.csv([{ "Sku": 10, "Ficha": 20 }], true, {
                         "Access-Control-Allow-Origin": "*"
                     }, 200);
                     console.log('done');
