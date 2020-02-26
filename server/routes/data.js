@@ -66,7 +66,7 @@ app.post('/', async (req, res) => {
                     console.log(data);
                     res.csv(data, true, {
                         "Access-Control-Allow-Origin": "*"
-                    }, 200);
+                    }, 10000);
 
                     res.send();
                 }, 200);
