@@ -7,7 +7,7 @@ const iconv = require('iconv-lite');
 const axios = require('axios');
 var csv = require('csv-express');
 
-let data = new Array();
+let data;
 
 const getPage = async (sku) => {
 
@@ -49,7 +49,7 @@ const getPage = async (sku) => {
 }
 
 app.post('/', (req, res) => {
-
+    data = new Array();
     let body = req.body;
     // console.log(body);
 
