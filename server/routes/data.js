@@ -55,46 +55,52 @@ app.post('/', (req, res) => {
 
     let body = req.body;
     // console.log(body);
-    // let data = new Array();
+    let data = new Array();
 
-    // let listadoSKUs = new Array();
-    // if (body.lista) {
-    //     console.log('Lista:', body.lista);
-    //     listadoSKUs = body.lista.split(',');
-    //     listadoSKUs = listadoSKUs.map(x => x.trim());
-    // }
+    let listadoSKUs = new Array();
+    if (body.lista) {
+        console.log('Lista:', body.lista);
+        listadoSKUs = body.lista.split(',');
+        listadoSKUs = listadoSKUs.map(x => x.trim());
+    }
 
     // Process
-    // if (listadoSKUs.length > 0) {
+    if (listadoSKUs.length > 0) {
 
 
-    //     let intervalos = setInterval(async () => {
-    //         let resultado = await getPage(listadoSKUs.shift());
-    //         data.push(resultado);
-    //         console.log('ficha: ......................................................', data);
-    //         if (listadoSKUs.length == 0) {
-    //             console.log(data);
-    //             clearInterval(intervalos);
-    //             setTimeout(function () {
+        let intervalos = setInterval(async () => {
+            let resultado = await getPage(listadoSKUs.shift());
+            data.push(resultado);
+            console.log('ficha: ......................................................', data);
+            if (listadoSKUs.length == 0) {
+                console.log(data);
+                clearInterval(intervalos);
+                setTimeout(function () {
 
-    //                 console.log('done');
+                    res.csv([
+                        { "a": 1, "b": 2, "c": 3 },
+                        { "a": 4, "b": 5, "c": 700 }
+                    ], true, {
+                        "Access-Control-Allow-Origin": "*"
+                    }, 200);
+                    
+                    res.send();
+                    console.log('done');
+                }, 5000);
+            }
+        }, 1000);
 
-    //                 res.send();
-    //             }, 5000);
-    //         }
-    //     }, 1000);
-
-    // }
+    }
 
     // res.setHeader('Content-disposition', 'attachment; filename=data.csv');
     // res.set('Content-Type', 'text/csv');
-    res.csv([
-        { "a": 1, "b": 2, "c": 3 },
-        { "a": 4, "b": 5, "c": 600 }
-    ], true, {
-        "Access-Control-Allow-Origin": "*"
-    }, 200);
-    res.send();
+    // res.csv([
+    //     { "a": 1, "b": 2, "c": 3 },
+    //     { "a": 4, "b": 5, "c": 600 }
+    // ], true, {
+    //     "Access-Control-Allow-Origin": "*"
+    // }, 200);
+    // res.send();
     
 });
 
