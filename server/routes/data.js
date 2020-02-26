@@ -4,14 +4,22 @@ const app = express();
 const cheerio = require('cheerio');
 const request = require('request');
 const iconv = require('iconv-lite');
+const axios = require('axios');
 
 
 
 const getPage = async (sku) => {
-    let resultado = await request({ uri: `https://www.homecenter.com.co/homecenter-co/product/${sku}`, encoding: null }, function (err, res, body) {
-        if (!err && res.statusCode == 200) {
-            body = iconv.decode(body, 'ISO-8859-1');
-            let $ = cheerio.load(body, { decodeEntities: false });
+
+    let url = `https://www.homecenter.com.co/homecenter-co/product/${sku}/`;
+
+    const instance = axios.create({
+        baseURL: url
+    });
+
+    instance.get()
+        .then(async (resp) => {
+            let $ = cheerio.load(resp.data, { decodeEntities: false });
+
             let lista = '';
             if ($('.prod-ficha.tab-list').length != 0) {
                 lista += '"<ul>';
@@ -32,13 +40,14 @@ const getPage = async (sku) => {
             }
             console.log('Proceso: ', sku, lista);
 
-        }
+        })
+        .catch(err => {
+            console.log("Error", err);
+            // errorList.push(sku);
+        })
 
-        return { '"Sku"': 1, '"Ficha"': 2 };
-
-    });
-
-    return resultado;
+    return { '"Sku"': 1, '"Ficha"': 2 };
+    // return resultado;
 }
 
 app.post('/', async (req, res) => {
@@ -58,9 +67,9 @@ app.post('/', async (req, res) => {
     if (listadoSKUs.length > 0) {
 
 
-        let intervalos = setInterval( async() => {
+        let intervalos = setInterval(async () => {
             let resultado = await getPage(listadoSKUs.shift());
-            data.push( resultado ); 
+            data.push(resultado);
             console.log('ficha: ......................................................', data);
             if (listadoSKUs.length == 0) {
                 console.log(data);
