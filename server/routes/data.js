@@ -8,7 +8,7 @@ const iconv = require('iconv-lite');
 
 
 const getPage = async (sku) => {
-    return await request({ uri: `https://www.homecenter.com.co/homecenter-co/product/${sku}`, encoding: null }, function (err, res, body) {
+    const result = await request({ uri: `https://www.homecenter.com.co/homecenter-co/product/${sku}`, encoding: null }, function (err, res, body) {
         if (!err && res.statusCode == 200) {
             body = iconv.decode(body, 'ISO-8859-1');
             let $ = cheerio.load(body, { decodeEntities: false });
@@ -35,6 +35,8 @@ const getPage = async (sku) => {
 
         }
     });
+
+    return result;
 }
 
 app.post('/', async (req, res) => {
@@ -56,7 +58,7 @@ app.post('/', async (req, res) => {
 
         let intervalos = setInterval( async() => {
             const ficha = await getPage(listadoSKUs.shift());
-            console.log('ficha:', ficha);
+            console.log('ficha: ......................................................', ficha.Sku);
             data.push(ficha);
             if (listadoSKUs.length == 0) {
                 clearInterval(intervalos);
@@ -69,7 +71,7 @@ app.post('/', async (req, res) => {
                     }, 200);
 
                     res.send();
-                }, 20000);
+                }, 200);
             }
         }, 1000);
 
