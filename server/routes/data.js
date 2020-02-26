@@ -77,13 +77,13 @@ app.post('/', (req, res) => {
 
                     res.csv(data, true, {
                         "Access-Control-Allow-Origin": "*"
-                    }, 20000);
+                    }, 200);
                     
                     res.send();
                     console.log('done');
-                }, 200);
+                }, 20000);
             }
-        }, 20000);
+        }, 1000);
 
     }
 
