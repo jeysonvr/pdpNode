@@ -75,14 +75,7 @@ app.post('/', async (req, res) => {
                 console.log(data);
                 clearInterval(intervalos);
                 setTimeout(function () {
-                    res.setHeader('Content-disposition', 'attachment; filename=data.csv');
-                    res.set('Content-Type', 'text/csv');
-                    res.csv([
-                        { "a": 1, "b": 2, "c": 3 },
-                        { "a": 4, "b": 5, "c": 6 }
-                    ], true, {
-                        "Access-Control-Allow-Origin": "*"
-                    }, 200);
+
                     console.log('done');
 
                     res.send();
@@ -91,6 +84,15 @@ app.post('/', async (req, res) => {
         }, 1000);
 
     }
+
+    res.setHeader('Content-disposition', 'attachment; filename=data.csv');
+    res.set('Content-Type', 'text/csv');
+    res.csv([
+        { "a": 1, "b": 2, "c": 3 },
+        { "a": 4, "b": 5, "c": 6 }
+    ], true, {
+        "Access-Control-Allow-Origin": "*"
+    }, 200);
 
 });
 
