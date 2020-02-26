@@ -54,7 +54,7 @@ app.post('/', async (req, res) => {
         let data = new Array();
 
 
-        let intervalos = setInterval(() => {
+        let intervalos = setInterval( async() => {
             const ficha = await getPage(listadoSKUs.shift());
             data.push(ficha);
             if (listadoSKUs.length == 0) {
