@@ -7,7 +7,7 @@ const iconv = require('iconv-lite');
 const axios = require('axios');
 var csv = require('csv-express');
 
-
+let data = new Array();
 
 const getPage = async (sku) => {
 
@@ -17,7 +17,7 @@ const getPage = async (sku) => {
         baseURL: url
     });
 
-    instance.get()
+    aainstance.get()
         .then(async (resp) => {
             let $ = cheerio.load(resp.data, { decodeEntities: false });
 
@@ -40,7 +40,7 @@ const getPage = async (sku) => {
                 lista += '"Producto no publicado en página"\n';
             }
             console.log('Proceso: ', sku, lista);
-            return { "Sku": sku, "Ficha": lista };
+            data.push( { "Sku": sku, "Ficha": lista } );
 
         })
         .catch(err => {
@@ -55,7 +55,6 @@ app.post('/', (req, res) => {
 
     let body = req.body;
     // console.log(body);
-    let data = new Array();
 
     let listadoSKUs = new Array();
     if (body.lista) {
@@ -69,13 +68,12 @@ app.post('/', (req, res) => {
 
 
         let intervalos = setInterval(async () => {
-            let resultado = await getPage(listadoSKUs.shift());
-            data.push(resultado);
-            console.log('ficha: ......................................................', data);
+            getPage(listadoSKUs.shift());
             if (listadoSKUs.length == 0) {
                 console.log(data);
                 clearInterval(intervalos);
                 setTimeout(function () {
+                    console.log('ficha: ......................................................', data);
 
                     res.csv(data, true, {
                         "Access-Control-Allow-Origin": "*"
