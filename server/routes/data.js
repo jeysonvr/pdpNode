@@ -5,10 +5,11 @@ const cheerio = require('cheerio');
 const request = require('request');
 const iconv = require('iconv-lite');
 
+let data = new Array();
 
 
 const getPage = async (sku) => {
-    const result = await request({ uri: `https://www.homecenter.com.co/homecenter-co/product/${sku}`, encoding: null }, function (err, res, body) {
+    await request({ uri: `https://www.homecenter.com.co/homecenter-co/product/${sku}`, encoding: null }, function (err, res, body) {
         if (!err && res.statusCode == 200) {
             body = iconv.decode(body, 'ISO-8859-1');
             let $ = cheerio.load(body, { decodeEntities: false });
@@ -31,12 +32,10 @@ const getPage = async (sku) => {
                 lista += '"Producto no publicado en página"\n';
             }
             console.log('Proceso: ', sku, lista);
-            return { "Sku": sku, "Ficha": lista }; 
+            data.push( { "Sku": sku, "Ficha": lista } );
 
         }
     });
-
-    return result;
 }
 
 app.post('/', async (req, res) => {
@@ -53,13 +52,11 @@ app.post('/', async (req, res) => {
 
     // Process
     if (listadoSKUs.length > 0) {
-        let data = new Array();
 
 
         let intervalos = setInterval( async() => {
-            const ficha = await getPage(listadoSKUs.shift());
-            console.log('ficha: ......................................................', ficha.Sku);
-            data.push(ficha);
+            await getPage(listadoSKUs.shift());
+            console.log('ficha: ......................................................', data);
             if (listadoSKUs.length == 0) {
                 clearInterval(intervalos);
                 setTimeout(function () {
