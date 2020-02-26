@@ -31,9 +31,11 @@ const getPage = async (sku) => {
                 lista += '"Producto no publicado en página"\n';
             }
             console.log('Proceso: ', sku, lista);
-            return { '"Sku"': 1, '"Ficha"': 2 };
 
         }
+
+        return { '"Sku"': 1, '"Ficha"': 2 };
+
     });
 
     return resultado;
@@ -58,7 +60,7 @@ app.post('/', async (req, res) => {
 
         let intervalos = setInterval( async() => {
             let resultado = await getPage(listadoSKUs.shift());
-            data.push( resultado );
+            data.push( resultado ); 
             console.log('ficha: ......................................................', data);
             if (listadoSKUs.length == 0) {
                 console.log(data);
