@@ -5,7 +5,6 @@ const cheerio = require('cheerio');
 const request = require('request');
 const iconv = require('iconv-lite');
 
-let data = new Array();
 
 
 const getPage = async (sku) => {
@@ -32,7 +31,7 @@ const getPage = async (sku) => {
                 lista += '"Producto no publicado en página"\n';
             }
             console.log('Proceso: ', sku, lista);
-            data.push({ "Sku": sku, "Ficha": lista });
+            return { "Sku": sku, "Ficha": lista }; 
 
         }
     });
@@ -52,10 +51,12 @@ app.post('/', async (req, res) => {
 
     // Process
     if (listadoSKUs.length > 0) {
+        let data = new Array();
+
 
         let intervalos = setInterval(() => {
-            await getPage(listadoSKUs.shift());
-
+            const ficha = await getPage(listadoSKUs.shift());
+            data.push(ficha);
             if (listadoSKUs.length == 0) {
                 clearInterval(intervalos);
                 setTimeout(function () {
