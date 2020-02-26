@@ -31,7 +31,7 @@ const getPage = async (sku) => {
             } else {
                 lista += '"Producto no publicado en página"\n';
             }
-
+            console.log('Proceso: ', sku, lista);
             data.push({ "Sku": sku, "Ficha": lista });
 
         }
@@ -54,13 +54,14 @@ app.post('/', async (req, res) => {
     if (listadoSKUs.length > 0) {
 
         let intervalos = setInterval(() => {
-            getPage(listadoSKUs.shift());
+            await getPage(listadoSKUs.shift());
 
             if (listadoSKUs.length == 0) {
                 clearInterval(intervalos);
                 setTimeout(function () {
                     res.setHeader('Content-disposition', 'attachment; filename=data.csv');
                     res.set('Content-Type', 'text/csv');
+                    console.log(data);
                     res.csv(data, true, {
                         "Access-Control-Allow-Origin": "*"
                     }, 200);
