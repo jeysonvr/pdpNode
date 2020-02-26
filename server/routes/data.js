@@ -1,6 +1,39 @@
 const express = require('express');
 const app = express();
-const fs = require('fs');
+// const fs = require('fs');
+
+let data = new Array();
+
+
+const getPage = (sku) => {
+    request({ uri: `https://www.homecenter.com.co/homecenter-co/product/${sku}`, encoding: null }, function (err, res, body) {
+        if (!err && res.statusCode == 200) {
+            body = iconv.decode(body, 'ISO-8859-1');
+            let $ = cheerio.load(body, { decodeEntities: false });
+            let lista = '';
+            if ($('.prod-ficha.tab-list').length != 0) {
+                lista += '"<ul>';
+                ficha = $('.prod-ficha.tab-list').find('.box-atrib').each(function () {
+                    lista += '<li>';
+                    $(this).find('td').each(function (j) {
+                        if (j == 0) {
+                            lista += $(this).text() + ' : ';
+                        } else {
+                            lista += $(this).text().replace(/\n/gi, ' ');
+                        }
+                    });
+                    lista += '</li>';
+                });
+                lista += '</ul>"\n';
+            } else {
+                lista += '"Producto no publicado en página"\n';
+            }
+
+            data.push({ "Sku": sku, "Ficha": lista });
+
+        }
+    });
+}
 
 app.post('/', (req, res) => {
 
@@ -15,33 +48,30 @@ app.post('/', (req, res) => {
     }
 
     // Process
-    // function saveDoc() {
-    fs.appendFile('prueba/prueba_1.csv', '\ufeff' + 'abcdario', { encoding: 'utf16le' }, function (err) {
-        if (err) {
-            console.log('error: ', err);
-        } else {
-            console.log('bien ok!!');
-        }
-    });
-    // }
+    if (listadoSKUs.length > 0) {
 
+        var intervalos = setInterval(() => {
+            var url = 'https://www.homecenter.com.co/homecenter-co/product/' + skus[i];
+            getPage(listadoSKUs.shift());
 
-    // res.status(200).download('/prueba.csv');
+            if (!listadoSKUs) {
+                clearInterval(intervalos);
+                setTimeout(function () {
+                    res.setHeader('Content-disposition', 'attachment; filename=data.csv');
+                    res.set('Content-Type', 'text/csv');
+                    res.csv(data, true, {
+                        "Access-Control-Allow-Origin": "*"
+                    }, 200);
 
-    // res.status(200).download('/prueba.csv');
+                    res.send();
+                }, 20000);
+            }
+        }, 1000);
 
-    res.setHeader('Content-disposition', 'attachment; filename=data.csv');
-    res.set('Content-Type', 'text/csv');
-    // res.status(200).send(csv);
-    res.csv([
-        { "a": 1, "b": 2, "c": 3 },
-        { "a": 4, "b": 5, "c": 6 }
-    ], true, {
-        "Access-Control-Allow-Origin": "*"
-    }, 200);
-
-    res.send();
+    }
 
 });
+
+
 
 module.exports = app;
