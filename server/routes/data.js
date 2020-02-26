@@ -5,6 +5,7 @@ const cheerio = require('cheerio');
 const request = require('request');
 const iconv = require('iconv-lite');
 const axios = require('axios');
+var csv = require('csv-express');
 
 
 
@@ -64,26 +65,26 @@ app.post('/', (req, res) => {
     }
 
     // Process
-    if (listadoSKUs.length > 0) {
+    // if (listadoSKUs.length > 0) {
 
 
-        let intervalos = setInterval(async () => {
-            let resultado = await getPage(listadoSKUs.shift());
-            data.push(resultado);
-            console.log('ficha: ......................................................', data);
-            if (listadoSKUs.length == 0) {
-                console.log(data);
-                clearInterval(intervalos);
-                setTimeout(function () {
+    //     let intervalos = setInterval(async () => {
+    //         let resultado = await getPage(listadoSKUs.shift());
+    //         data.push(resultado);
+    //         console.log('ficha: ......................................................', data);
+    //         if (listadoSKUs.length == 0) {
+    //             console.log(data);
+    //             clearInterval(intervalos);
+    //             setTimeout(function () {
 
-                    console.log('done');
+    //                 console.log('done');
 
-                    res.send();
-                }, 5000);
-            }
-        }, 1000);
+    //                 res.send();
+    //             }, 5000);
+    //         }
+    //     }, 1000);
 
-    }
+    // }
 
     res.setHeader('Content-disposition', 'attachment; filename=data.csv');
     res.set('Content-Type', 'text/csv');
@@ -93,7 +94,7 @@ app.post('/', (req, res) => {
     ], true, {
         "Access-Control-Allow-Origin": "*"
     }, 200);
-
+    
 });
 
 
