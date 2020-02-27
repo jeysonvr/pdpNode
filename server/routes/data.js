@@ -6,6 +6,7 @@ const request = require('request');
 const iconv = require('iconv-lite');
 const axios = require('axios');
 var csv = require('csv-express');
+const sendmail = require('sendmail')();
 
 let data;
 
@@ -49,40 +50,55 @@ const getPage = async (sku) => {
 }
 
 app.post('/', (req, res) => {
-    data = new Array();
-    let body = req.body;
-    // console.log(body);
+    // data = new Array();
+    // let body = req.body;
+    // // console.log(body);
 
-    let listadoSKUs = new Array();
-    if (body.lista) {
-        console.log('Lista:', body.lista);
-        listadoSKUs = body.lista.split(',');
-        listadoSKUs = listadoSKUs.map(x => x.trim());
-    }
+    // let listadoSKUs = new Array();
+    // if (body.lista) {
+    //     console.log('Lista:', body.lista);
+    //     listadoSKUs = body.lista.split(',');
+    //     listadoSKUs = listadoSKUs.map(x => x.trim());
+    // }
 
-    // Process
-    if (listadoSKUs.length > 0) {
+    // // Process
+    // if (listadoSKUs.length > 0) {
 
 
-        let intervalos = setInterval(async () => {
-            getPage(listadoSKUs.shift());
-            if (listadoSKUs.length == 0) {
-                console.log(data);
-                clearInterval(intervalos);
-                setTimeout(function () {
-                    console.log('ficha: ......................................................', data);
+    //     let intervalos = setInterval(async () => {
+    //         getPage(listadoSKUs.shift());
+    //         if (listadoSKUs.length == 0) {
+    //             console.log(data);
+    //             clearInterval(intervalos);
+    //             setTimeout(function () {
+    //                 console.log('ficha: ......................................................', data);
 
-                    res.csv(data, true, {
-                        "Access-Control-Allow-Origin": "*"
-                    }, 200);
+    //                 res.csv(data, true, {
+    //                     "Access-Control-Allow-Origin": "*"
+    //                 }, 200);
 
-                    res.send();
-                    console.log('done');
-                }, 20000);
-            }
-        }, 1000);
+    //                 res.send();
+    //                 console.log('done');
+    //             }, 20000);
+    //         }
+    //     }, 1000);
 
-    }
+    // }
+
+    sendmail({
+        from: 'jeysonvegaromero@gmail.com',
+        to: 'jeysonvegaromero@gmail.com',
+        subject: 'test sendmail',
+        html: 'Mail of test sendmail ',
+    }, function (err, reply) {
+        console.log(err && err.stack);
+        console.dir(reply);
+    });
+
+    res.status(200).json({
+        ok: true,
+        message: 'Enviado'
+    });
 
 });
 

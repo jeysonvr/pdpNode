@@ -18,7 +18,9 @@
     "express": "^4.17.1",
     "fs": "0.0.1-security",
     "iconv-lite": "^0.5.1",
+    "mail": "^0.2.3",
     "nodemon": "^2.0.2",
-    "request": "^2.88.2"
+    "request": "^2.88.2",
+    "sendmail": "^1.6.1"
   }
 }
