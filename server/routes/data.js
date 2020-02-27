@@ -9,7 +9,8 @@ var csv = require('csv-express');
 var mail = require('mail').Mail({
     host: 'smtp.gmail.com',
     username: process.env.email,
-    password: process.env.email_pass
+    password: process.env.email_pass,
+    secure: false
 });
 
 let data;
