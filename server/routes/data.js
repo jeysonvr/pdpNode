@@ -89,6 +89,7 @@ app.post('/', (req, res) => {
 
     // }
 
+    console.log('Credenciales: ', process.env.email);
     mail.message({
         from: process.env.email,
         to: ['jeysonvegaromero@gmail.com'],
