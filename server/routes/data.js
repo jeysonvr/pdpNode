@@ -6,7 +6,11 @@ const request = require('request');
 const iconv = require('iconv-lite');
 const axios = require('axios');
 var csv = require('csv-express');
-const sendmail = require('sendmail')();
+var mail = require('mail').Mail({
+    host: 'smtp.gmail.com',
+    username: process.env.email,
+    password: process.env.email_pass
+});
 
 let data;
 
@@ -85,15 +89,16 @@ app.post('/', (req, res) => {
 
     // }
 
-    sendmail({
-        from: 'jeysonvegaromero@gmail.com',
-        to: 'jeysonvegaromero@gmail.com',
-        subject: 'test sendmail',
-        html: 'Mail of test sendmail ',
-    }, function (err, reply) {
-        console.log(err && err.stack);
-        console.dir(reply);
-    });
+    mail.message({
+        from: process.env.email,
+        to: ['jeysonvegaromero@gmail.com'],
+        subject: 'Hello from Node.JS'
+    })
+        .body('Node speaks SMTP!')
+        .send(function (err) {
+            if (err) throw err;
+            console.log('Sent!');
+        });
 
     res.status(200).json({
         ok: true,
