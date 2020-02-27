@@ -23,6 +23,7 @@
     "nodemailer": "^6.4.3",
     "nodemon": "^2.0.2",
     "request": "^2.88.2",
-    "sendmail": "^1.6.1"
+    "sendmail": "^1.6.1",
+    "to-csv": "^0.1.1"
   }
 }
