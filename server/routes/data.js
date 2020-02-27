@@ -5,7 +5,7 @@ const cheerio = require('cheerio');
 const request = require('request');
 const iconv = require('iconv-lite');
 const axios = require('axios');
-// var csv = require('csv-express');
+var csv = require('csv-express');
 var nodemailer = require('nodemailer');
 var transporter = nodemailer.createTransport({
     service: 'Gmail',
@@ -89,7 +89,7 @@ app.post('/', (req, res) => {
                         attachments: [
                             {
                                 filename: 'text1.csv',
-                                content: csv(data)
+                                content: data.toString()
                             }
                         ]
                         // bcc: "fred@gmail.com"
@@ -102,8 +102,8 @@ app.post('/', (req, res) => {
                             res.send(200);
                         }
                     });
-
-
+                
+                
                     res.status(200).json({
                         ok: true,
                         message: 'Enviado'
@@ -122,7 +122,7 @@ app.post('/', (req, res) => {
     }
 
 
-
+    
 
 });
 
