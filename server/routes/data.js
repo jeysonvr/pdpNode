@@ -57,75 +57,72 @@ const getPage = async (sku) => {
 }
 
 app.post('/', (req, res) => {
-    // data = new Array();
-    // let body = req.body;
-    // // console.log(body);
+    data = new Array();
+    let body = req.body;
+    // console.log(body);
 
-    // let listadoSKUs = new Array();
-    // if (body.lista) {
-    //     console.log('Lista:', body.lista);
-    //     listadoSKUs = body.lista.split(',');
-    //     listadoSKUs = listadoSKUs.map(x => x.trim());
-    // }
+    let listadoSKUs = new Array();
+    if (body.lista) {
+        console.log('Lista:', body.lista);
+        listadoSKUs = body.lista.split(',');
+        listadoSKUs = listadoSKUs.map(x => x.trim());
+    }
 
-    // // Process
-    // if (listadoSKUs.length > 0) {
-
-
-    //     let intervalos = setInterval(async () => {
-    //         getPage(listadoSKUs.shift());
-    //         if (listadoSKUs.length == 0) {
-    //             console.log(data);
-    //             clearInterval(intervalos);
-    //             setTimeout(function () {
-    //                 console.log('ficha: ......................................................', data);
-
-    //                 res.csv(data, true, {
-    //                     "Access-Control-Allow-Origin": "*"
-    //                 }, 200);
-
-    //                 res.send();
-    //                 console.log('done');
-    //             }, 20000);
-    //         }
-    //     }, 1000);
-
-    // }
-
-    // console.log('Credenciales: ', process.env.email);
-    // mail.message({
-    //     from: process.env.email,
-    //     to: ['jeysonvegaromero@gmail.com'],
-    //     subject: 'Hello from Node.JS'
-    // })
-    //     .body('Node speaks SMTP!')
-    //     .send(function (err) {
-    //         if (err) throw err;
-    //         console.log('Sent!');
-    //     });
-
-    var mailOptions = {
-        from: 'Foo Bar ✔ <foobar@gmail.com>',
-        to: 'jeysonvegaromero@gmail.com',
-        subject: "Hello from node",
-        text: 'Hello there ✔',
-        html: "<p>Hello  </p>"
-        // bcc: "fred@gmail.com"
-    };
-    transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            console.log(error);
-        } else {
-            console.log('Message sent: ' + info.response);
-            res.send(200);
-        }
-    });
+    // Process
+    if (listadoSKUs.length > 0) {
 
 
-    res.status(200).json({
-        ok: true,
-        message: 'Enviado'
-    });
+        let intervalos = setInterval(async () => {
+            getPage(listadoSKUs.shift());
+            if (listadoSKUs.length == 0) {
+                console.log(data);
+                clearInterval(intervalos);
+                setTimeout(function () {
+                    console.log('ficha: ......................................................', data);
+
+                    var mailOptions = {
+                        from: 'Foo Bar ✔ <foobar@gmail.com>',
+                        to: 'jeysonvegaromero@gmail.com',
+                        subject: "Hello from node",
+                        text: 'Hello there ✔',
+                        html: "<p>Hello  </p>",
+                        attachments: [
+                            {
+                                filename: 'text1.csv',
+                                content: data
+                            }
+                        ]
+                        // bcc: "fred@gmail.com"
+                    };
+                    transporter.sendMail(mailOptions, function (error, info) {
+                        if (error) {
+                            console.log(error);
+                        } else {
+                            console.log('Message sent: ' + info.response);
+                            res.send(200);
+                        }
+                    });
+
+
+                    res.status(200).json({
+                        ok: true,
+                        message: 'Enviado'
+                    });
+
+                    // res.csv(data, true, {
+                    //     "Access-Control-Allow-Origin": "*"
+                    // }, 200);
+
+                    // res.send();
+                    console.log('done');
+                }, 20000);
+            }
+        }, 1000);
+
+    }
+
+
+
 
 });
 
