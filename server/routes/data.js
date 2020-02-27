@@ -6,11 +6,13 @@ const request = require('request');
 const iconv = require('iconv-lite');
 const axios = require('axios');
 var csv = require('csv-express');
-var mail = require('mail').Mail({
-    host: 'smtp.gmail.com',
-    username: process.env.email,
-    password: process.env.email_pass,
-    secure: false
+var nodemailer = require('nodemailer');
+var transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+        user: process.env.email,
+        pass: process.env.email_pass
+    }
 });
 
 let data;
@@ -90,17 +92,35 @@ app.post('/', (req, res) => {
 
     // }
 
-    console.log('Credenciales: ', process.env.email);
-    mail.message({
-        from: process.env.email,
-        to: ['jeysonvegaromero@gmail.com'],
-        subject: 'Hello from Node.JS'
-    })
-        .body('Node speaks SMTP!')
-        .send(function (err) {
-            if (err) throw err;
-            console.log('Sent!');
-        });
+    // console.log('Credenciales: ', process.env.email);
+    // mail.message({
+    //     from: process.env.email,
+    //     to: ['jeysonvegaromero@gmail.com'],
+    //     subject: 'Hello from Node.JS'
+    // })
+    //     .body('Node speaks SMTP!')
+    //     .send(function (err) {
+    //         if (err) throw err;
+    //         console.log('Sent!');
+    //     });
+
+    var mailOptions = {
+        from: 'Foo Bar ✔ <foobar@gmail.com>',
+        to: 'jeysonvegaromero@gmail.com',
+        subject: "Hello from node",
+        text: 'Hello there ✔',
+        html: "<p>Hello  </p>"
+        // bcc: "fred@gmail.com"
+    };
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Message sent: ' + info.response);
+            res.send(200);
+        }
+    });
+
 
     res.status(200).json({
         ok: true,
