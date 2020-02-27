@@ -5,7 +5,8 @@ const cheerio = require('cheerio');
 const request = require('request');
 const iconv = require('iconv-lite');
 const axios = require('axios');
-var csv = require('csv-express');
+// var csv = require('csv-express');
+var csv = require('to-csv');
 var nodemailer = require('nodemailer');
 var transporter = nodemailer.createTransport({
     service: 'Gmail',
@@ -89,7 +90,7 @@ app.post('/', (req, res) => {
                         attachments: [
                             {
                                 filename: 'text1.csv',
-                                content: data.toString()
+                                content: csv(data)
                             }
                         ]
                         // bcc: "fred@gmail.com"
