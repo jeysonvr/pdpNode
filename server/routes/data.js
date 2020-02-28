@@ -16,7 +16,7 @@ var transporter = nodemailer.createTransport({
     }
 });
 
-let data;
+let data = [];
 
 const getPage = async (sku) => {
 
@@ -49,7 +49,7 @@ const getPage = async (sku) => {
                 lista += '"Producto no publicado en página"\n';
             }
             console.log('Proceso: ', sku, lista);
-            data.push({ "Sku": sku, "Ficha": lista });
+            data.push({ Sku: sku, Ficha: 'lista' });
 
         })
         .catch(err => {
@@ -58,7 +58,7 @@ const getPage = async (sku) => {
 }
 
 app.post('/', (req, res) => {
-    data = new Array();
+    data = [];
     let body = req.body;
     // console.log(body);
 
