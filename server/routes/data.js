@@ -51,7 +51,7 @@ const getPage = async (sku) => {
                 page = 'Catalyst';
                 lista += '"<ul>';
                 $('div[id="Ficha técnica"] .content .content .row').each(function () {
-                    lista += `<li>"${$(this).find('div.title').text()}" : "${$(this).find('div.value').text().replace(/\n/gi, ' ').replace(',','\,')}</li>"`;
+                    lista += `<li>"${$(this).find('div.title').text()}" : "${$(this).find('div.value').text().replace(/\n/gi, ' ')}</li>"`;
                 });
                 lista += '</ul>"';
             } else {
@@ -59,7 +59,7 @@ const getPage = async (sku) => {
             }
 
             console.log(`Proceso - ${page}: `, sku, lista);
-            data.push({ Sku: sku, Ficha: lista });
+            data.push({ Sku: sku, Ficha: lista.toString() });
 
         })
         .catch(err => {
