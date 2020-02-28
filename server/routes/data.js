@@ -49,7 +49,7 @@ const getPage = async (sku) => {
                     lista += '</ul>"\n';
                 } else {
                     // lista += '"Producto no publicado en página"\n';
-                    lista += $;
+                    lista += $('div[id="Ficha técnica"] .content .content .row');
                 }
 
             console.log('Proceso: ', sku, lista);
