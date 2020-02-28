@@ -90,6 +90,9 @@ app.post('/', (req, res) => {
     // Process
     if (listadoSKUs.length > 0) {
 
+        // Response: ok
+        let sec = skus.split(',').length;
+        let msj = `Este proceso toma aprox ${Math.ceil(listadoSKUs.length / 60)} minutos`;
         res.status(200).json({
             ok: true,
             message: 'En proceso: Le será enviado un correo al finalizar',
@@ -128,9 +131,7 @@ app.post('/', (req, res) => {
                     // });
 
 
-                    // Response
-                    let sec = skus.split(',').length;
-                    let msj = `Este proceso toma aprox ${Math.ceil(listadoSKUs.length / 60)} minutos`;
+                    
 
                 }, 20000);
             }
