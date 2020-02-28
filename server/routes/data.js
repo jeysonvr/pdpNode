@@ -41,7 +41,7 @@ const getPage = async (sku) => {
                         if (j == 0) {
                             lista += `${$(this).text().replace(',','\,') } : `;
                         } else {
-                            lista += `"${$(this).text().replace(/\n/gi, ' ').replace(',','","')}"`;
+                            lista += `${$(this).text().replace(/\n/gi, ' ').replace(',',' ')}`;
                         }
                     });
                     lista += '</li>';
@@ -51,7 +51,7 @@ const getPage = async (sku) => {
                 page = 'Catalyst';
                 lista += '"<ul>';
                 $('div[id="Ficha técnica"] .content .content .row').each(function () {
-                    lista += `<li>"${$(this).find('div.title').text()}" : "${$(this).find('div.value').text().replace(/\n/gi, ' ').replace(',','","')}</li>"`;
+                    lista += `<li>${$(this).find('div.title').text()} : ${$(this).find('div.value').text().replace(/\n/gi, ' ').replace(',',' ')}</li>`;
                 });
                 lista += '</ul>"';
             } else {
