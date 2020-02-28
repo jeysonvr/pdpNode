@@ -34,26 +34,18 @@ const getPage = async (sku) => {
             let page = 'ATG';
             //ATG
             if ($('.prod-ficha.tab-list').length != 0) {
-                lista += '"<ul>';
+                lista += '<ul>';
                 $('.prod-ficha.tab-list').find('.box-atrib').each(function () {
-                    lista += '<li>';
-                    $(this).find('td').each(function (j) {
-                        if (j == 0) {
-                            lista += `${$(this).text().replace(',','\,') } : `;
-                        } else {
-                            lista += `${$(this).text().replace(/\n/gi, ' ').replace(/\,/g,' ')}`;
-                        }
-                    });
-                    lista += '</li>';
+                    lista += `<li>${ $(this).find('td').eq(0).text().replace(',','\,') } : ${ $(this).find('td').eq(1).text().replace(/\n/gi, ' ').replace(/\,/g,' ')}</li>`;
                 });
-                lista += '</ul>"\n';
+                lista += '</ul>';
             } else if ($('div[id="Ficha técnica"] .content .content .row').length != 0) {
                 page = 'Catalyst';
-                lista += '"<ul>';
+                lista += '<ul>';
                 $('div[id="Ficha técnica"] .content .content .row').each(function () {
                     lista += `<li>${$(this).find('div.title').text()} : ${$(this).find('div.value').text().replace(/\n/gi, ' ').replace(/\,/g,' ')}</li>`;
                 });
-                lista += '</ul>"';
+                lista += '</ul>';
             } else {
                 lista += '"Producto no publicado en página"';
             }
