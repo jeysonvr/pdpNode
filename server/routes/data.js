@@ -39,9 +39,9 @@ const getPage = async (sku) => {
                     lista += '<li>';
                     $(this).find('td').each(function (j) {
                         if (j == 0) {
-                            lista += $(this).text() + ' : ';
+                            lista += `"${$(this).text()}" : `;
                         } else {
-                            lista += $(this).text().replace(/\n/gi, ' ');
+                            lista += `"${$(this).text().replace(/\n/gi, ' ')}"`;
                         }
                     });
                     lista += '</li>';
@@ -51,13 +51,11 @@ const getPage = async (sku) => {
                 page = 'Catalyst';
                 lista += '"<ul>';
                 $('div[id="Ficha técnica"] .content .content .row').each(function () {
-                    lista += '<li>';
-                    lista += `${$(this).find('div.title').text()} : ${$(this).find('div.value').text()}`;
-                    lista += '</li>';
+                    lista += `<li>"${$(this).find('div.title').text()}" : "${$(this).find('div.value').text()}</li>"`;
                 });
-                lista += '</ul>"\n';
+                lista += '</ul>"';
             } else {
-                lista += '"Producto no publicado en página"\n';
+                lista += '"Producto no publicado en página"';
             }
 
             console.log(`Proceso - ${page}: `, sku, lista);
