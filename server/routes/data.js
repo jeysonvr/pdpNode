@@ -48,20 +48,20 @@ const getPage = async (sku) => {
                 });
                 lista += '</ul>"\n';
             } else if ($('div[id="Ficha técnica"] .content .content .row').length != 0) {
+                page = 'Catalyst';
                 lista += '"<ul>';
                 $('div[id="Ficha técnica"] .content .content .row').each(function () {
                     lista += '<li>';
-                    lista += `${ $(this).find( 'div.title' ).text() } : ${ $(this).find( 'div.value' ).text() }`;
+                    lista += `${$(this).find('div.title').text()} : ${$(this).find('div.value').text()}`;
                     lista += '</li>';
                 });
                 lista += '</ul>"\n';
-                page = 'Catalyst';
             } else {
                 lista += '"Producto no publicado en página"\n';
             }
 
-            console.log(`Proceso - ${ page }: `, sku, lista);
-            data.push({ Sku: sku, Ficha: 'lista' });
+            console.log(`Proceso - ${page}: `, sku, lista);
+            data.push({ Sku: sku, Ficha: lista });
 
         })
         .catch(err => {
@@ -97,36 +97,33 @@ app.post('/', (req, res) => {
             if (listadoSKUs.length == 0) {
                 console.log(data);
                 clearInterval(intervalos);
-                // setTimeout(function () {
-                //     console.log('ficha: ......................................................', data);
+                setTimeout(function () {
 
-                //     // var mailOptions = {
-                //     //     from: 'Foo Bar ✔ <foobar@gmail.com>',
-                //     //     to: 'jeysonvegaromero@gmail.com',
-                //     //     subject: "Hello from node",
-                //     //     text: 'Hello there ✔',
-                //     //     html: "<p>Hello  </p>",
-                //     //     attachments: [
-                //     //         {
-                //     //             filename: 'text1.csv',
-                //     //             content: csv(data)
-                //     //         }
-                //     //     ]
-                //     //     // bcc: "fred@gmail.com"
-                //     // };
-                //     // transporter.sendMail(mailOptions, function (error, info) {
-                //     //     if (error) {
-                //     //         console.log(error);
-                //     //     } else {
-                //     //         console.log('Message sent: ' + info.response);
-                //     //         res.send(200);
-                //     //     }
-                //     // });
+                    // Send mail
+                    var mailOptions = {
+                        from: 'Homecenter VAD ✔ <homecenter.vad.dev@gmail.com>',
+                        to: 'jeysonvegaromero@gmail.com',
+                        subject: "Excel - Fichas técnicas",
+                        text: 'Excel - Fichas técnicas',
+                        html: "<p>Hola, se realizó una solicitud para obtener el listado de fichas técnicas de productos <b>Homecenter-co</b>.</p><p>Adjunto encontrará un excel con la información solicitada.</p>",
+                        attachments: [
+                            {
+                                filename: 'pdp.csv',
+                                content: csv(data)
+                            }
+                        ]
+                        // bcc: "fred@gmail.com"
+                    };
+                    transporter.sendMail(mailOptions, function (error, info) {
+                        if (error) {
+                            console.log(error);
+                        } else {
+                            console.log('Message sent: ' + info.response);
+                            res.send(200);
+                        }
+                    });
 
-
-                    
-
-                // }, 20000);
+                }, 15000);
             }
         }, 1000);
 
