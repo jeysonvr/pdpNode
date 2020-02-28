@@ -31,23 +31,33 @@ const getPage = async (sku) => {
             let $ = cheerio.load(resp.data, { decodeEntities: false });
 
             let lista = '';
-            if ($('.prod-ficha.tab-list').length != 0) {
-                lista += '"<ul>';
-                ficha = $('.prod-ficha.tab-list').find('.box-atrib').each(function () {
-                    lista += '<li>';
-                    $(this).find('td').each(function (j) {
-                        if (j == 0) {
-                            lista += $(this).text() + ' : ';
-                        } else {
-                            lista += $(this).text().replace(/\n/gi, ' ');
-                        }
+            //ATG
+            if ($('.prod-ficha.tab-list')) {
+
+                if ($('.prod-ficha.tab-list').length != 0) {
+                    lista += '"<ul>';
+                    ficha = $('.prod-ficha.tab-list').find('.box-atrib').each(function () {
+                        lista += '<li>';
+                        $(this).find('td').each(function (j) {
+                            if (j == 0) {
+                                lista += $(this).text() + ' : ';
+                            } else {
+                                lista += $(this).text().replace(/\n/gi, ' ');
+                            }
+                        });
+                        lista += '</li>';
                     });
-                    lista += '</li>';
-                });
-                lista += '</ul>"\n';
-            } else {
-                lista += '"Producto no publicado en página"\n';
+                    lista += '</ul>"\n';
+                } else {
+                    lista += '"Producto no publicado en página"\n';
+                }
+
             }
+            // Catalyst
+            else {
+                console.log( 'Catalyst:', $ );
+            }
+
             console.log('Proceso: ', sku, lista);
             data.push({ Sku: sku, Ficha: 'lista' });
 
@@ -103,8 +113,8 @@ app.post('/', (req, res) => {
                             res.send(200);
                         }
                     });
-                
-                
+
+
                     res.status(200).json({
                         ok: true,
                         message: 'Enviado'
@@ -123,7 +133,7 @@ app.post('/', (req, res) => {
     }
 
 
-    
+
 
 });
 
