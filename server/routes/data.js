@@ -32,7 +32,6 @@ const getPage = async (sku) => {
 
             let lista = '';
             //ATG
-            if ($('.prod-ficha.tab-list')) {
 
                 if ($('.prod-ficha.tab-list').length != 0) {
                     lista += '"<ul>';
@@ -49,14 +48,9 @@ const getPage = async (sku) => {
                     });
                     lista += '</ul>"\n';
                 } else {
-                    lista += '"Producto no publicado en página"\n';
+                    // lista += '"Producto no publicado en página"\n';
+                    lista += $;
                 }
-
-            }
-            // Catalyst
-            else {
-                console.log( 'Catalyst:', $ );
-            }
 
             console.log('Proceso: ', sku, lista);
             data.push({ Sku: sku, Ficha: 'lista' });
