@@ -31,7 +31,7 @@ const getPage = async (sku) => {
             let $ = cheerio.load(resp.data, { decodeEntities: false });
 
             let lista = '';
-
+            let page = 'ATG';
             //ATG
             if ($('.prod-ficha.tab-list').length != 0) {
                 lista += '"<ul>';
@@ -61,12 +61,12 @@ const getPage = async (sku) => {
                     lista += '</li>';
                 });
                 lista += '</ul>"\n';
-
+                page = 'Catalyst';
             } else {
                 lista += '"Producto no publicado en página"\n';
             }
 
-            console.log('Proceso: ', sku, lista);
+            console.log(`Proceso - ${ page }: `, sku, lista);
             data.push({ Sku: sku, Ficha: 'lista' });
 
         })
@@ -103,36 +103,36 @@ app.post('/', (req, res) => {
             if (listadoSKUs.length == 0) {
                 console.log(data);
                 clearInterval(intervalos);
-                setTimeout(function () {
-                    console.log('ficha: ......................................................', data);
+                // setTimeout(function () {
+                //     console.log('ficha: ......................................................', data);
 
-                    // var mailOptions = {
-                    //     from: 'Foo Bar ✔ <foobar@gmail.com>',
-                    //     to: 'jeysonvegaromero@gmail.com',
-                    //     subject: "Hello from node",
-                    //     text: 'Hello there ✔',
-                    //     html: "<p>Hello  </p>",
-                    //     attachments: [
-                    //         {
-                    //             filename: 'text1.csv',
-                    //             content: csv(data)
-                    //         }
-                    //     ]
-                    //     // bcc: "fred@gmail.com"
-                    // };
-                    // transporter.sendMail(mailOptions, function (error, info) {
-                    //     if (error) {
-                    //         console.log(error);
-                    //     } else {
-                    //         console.log('Message sent: ' + info.response);
-                    //         res.send(200);
-                    //     }
-                    // });
+                //     // var mailOptions = {
+                //     //     from: 'Foo Bar ✔ <foobar@gmail.com>',
+                //     //     to: 'jeysonvegaromero@gmail.com',
+                //     //     subject: "Hello from node",
+                //     //     text: 'Hello there ✔',
+                //     //     html: "<p>Hello  </p>",
+                //     //     attachments: [
+                //     //         {
+                //     //             filename: 'text1.csv',
+                //     //             content: csv(data)
+                //     //         }
+                //     //     ]
+                //     //     // bcc: "fred@gmail.com"
+                //     // };
+                //     // transporter.sendMail(mailOptions, function (error, info) {
+                //     //     if (error) {
+                //     //         console.log(error);
+                //     //     } else {
+                //     //         console.log('Message sent: ' + info.response);
+                //     //         res.send(200);
+                //     //     }
+                //     // });
 
 
                     
 
-                }, 20000);
+                // }, 20000);
             }
         }, 1000);
 
