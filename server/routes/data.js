@@ -91,7 +91,6 @@ app.post('/', (req, res) => {
     if (listadoSKUs.length > 0) {
 
         // Response: ok
-        let sec = skus.split(',').length;
         let msj = `Este proceso toma aprox ${Math.ceil(listadoSKUs.length / 60)} minutos`;
         res.status(200).json({
             ok: true,
