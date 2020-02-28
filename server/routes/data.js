@@ -51,13 +51,7 @@ const getPage = async (sku) => {
                 lista += '"<ul>';
                 $('div[id="Ficha técnica"] .content .content .row').each(function () {
                     lista += '<li>';
-                    $(this).find('div').each(function (j) {
-                        if (j == 0) {
-                            lista += $(this).text() + ' : ';
-                        } else {
-                            lista += $(this).text().replace(/\n/gi, ' ');
-                        }
-                    });
+                    lista += `${ $(this).find( 'div.title' ).text() } : ${ $(this).find( 'div.value' ).text() }`;
                     lista += '</li>';
                 });
                 lista += '</ul>"\n';
