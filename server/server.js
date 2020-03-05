@@ -18,4 +18,9 @@ var server = app.listen(process.env.PORT, () => {
 server.timeout = 1000 * 60 * 10;
 
 
-console.log('dir name:', __dirname);
+// console.log('dir name:', __dirname);
+
+
+// Habilitar ruta publica
+app.use( express.static(path.resolve(__dirname, '../public')) );
+// console.log( path.resolve(__dirname + '../public') );

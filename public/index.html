@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDP Node Heroku</title>
+</head>
+
+<body>
+    <h3>Esto es una prueba simple</h3>
+    <p><textarea id="contenido" name="mensaje" placeholder="Comparte tu opinión con el autor!"></textarea></p>
+    <button id="btnEnviar">Enviar</button>
+
+    <script>
+        $('#btnEnviar').click(() => {
+
+            let skus = $('#contenido').val();
+
+            // let sec = skus.split(',').length;
+
+            // console.log(`Este proceso toma aprox ${ Math.ceil(sec/60) } minutos`);
+
+            fetch('http://desolate-springs-42998.herokuapp.com/', {
+                method: 'POST',
+                // mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                responseType: 'blob',
+                body: `lista=${skus}`
+            })
+                .then((res => res.json()))
+                .then((console.log))
+                .catch(console);
+
+        });
+
+        const getDate = () => {
+            var m = new Date();
+            var dateString = (m.getUTCFullYear() * 100 + (m.getMonth() + 1)) * 100 + m.getDate();
+            dateString = dateString * 100 + m.getHours();
+            dateString = dateString * 100 + m.getMinutes();
+            dateString = dateString * 100 + m.getSeconds();
+
+            return dateString;
+        }
+
+
+    </script>
+
+
+</body>
+
+</html>
